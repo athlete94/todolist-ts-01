@@ -1,35 +1,46 @@
 import React from "react"
 import TodoListHeader from "./TodoListHeader"
 import Button from "./Button"
-import { TasksType } from "./App"
+import {TasksType} from "./App"
 import Task from "./Task"
 
 type TodoListPropsType = {
     title: string,
     tasks: Array<TasksType>
+    removeTask: Function
+    filterTask: Function
 }
 
-const TodoList = (props: TodoListPropsType) => {
 
-    const {title, tasks} = props // деструктуризация
+const TodoList = ({
+                      title,
+                      tasks,
+                      removeTask,
+                      filterTask
+                  }: TodoListPropsType) => {
+
+    const buttons = [
+        {title: 'All'},
+        {title: 'Active'},
+        {title: 'Completed'}
+    ]
 
     return <div>
-            <TodoListHeader title={title} />
-            <div>
-                <input/>
-                <button>+</button>
-            </div>
-            <ul>
-                <Task key={tasks[0].id} {...tasks[0]} />
-                <Task key={tasks[1].id} {...tasks[1]} />
-                <Task key={tasks[2].id} {...tasks[2]} />
-            </ul>
-            <div>
-                <Button title={"All"}/>
-                <Button title={"Active"}/>
-                <Button title={"Completed"}/>
-            </div>
+        <TodoListHeader title={title}/>
+        <div>
+            <input/>
+            <button>+</button>
         </div>
+        <ul>
+            {tasks.map(t => <Task key={t.id}
+                                  {...t}
+                                  removeTask={removeTask}/>)}
+        </ul>
+        <div>
+            {buttons.map((b) => <Button title={b.title} filterTask={filterTask}/>)}
+        </div>
+
+    </div>
 }
 
 export {TodoList}

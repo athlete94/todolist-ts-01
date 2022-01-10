@@ -1,11 +1,12 @@
 import React from "react";
 
 type ButtonPropsType = {
-    title: string
+    title: string,
+    filterTask: Function
 }
 
-const Button = ({title}: ButtonPropsType) => {
-     return <button>{title}</button>
+const Button = ({title,filterTask}: ButtonPropsType) => {
+     return <button onClick={() => filterTask(title)}>{title}</button>
 }
 
 export default Button

@@ -1,18 +1,21 @@
 import React from "react";
 
 type TaskPropsType = {
-    //id: number
+    id: number
     title: string,
     isDone: boolean;
+    removeTask: Function
 }
 
 
-const Task = (props: TaskPropsType) => {
-
-    const { title, isDone} = props
+const Task = ({title, isDone, removeTask, id}: TaskPropsType) => {
 
     return <div>
-        <li><input type="checkbox" checked={isDone}/> <span>{title}</span></li>
+        <li>
+            <input type="checkbox" checked={isDone}/>
+            <span>{title}</span>
+            <button onClick={() => removeTask(id) }>x</button>
+        </li>
     </div>
 }
 
