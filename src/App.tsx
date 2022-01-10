@@ -12,9 +12,11 @@ export type TasksType = {
 
 export type FilterType = 'All' | 'Active' | 'Completed'
 
+//export type FilterType = "All" | "Active" | "Completed"
+
 function App() {
 
-    const [tasks, setTasks] = useState([
+    const [tasks, setTasks] = useState<Array<TasksType>>([
         {id: 1, title: "HTML&CSS", isDone: true},
         {id: 2, title: "JS/ES6", isDone: true},
         {id: 3, title: "REACT", isDone: false}
@@ -35,13 +37,18 @@ function App() {
     }
 
     // filter tasks
-    let filteredTasks = tasks
-    if(filter === 'Active') {
-        filteredTasks = tasks.filter(t => t.isDone == false)
+
+    const getTasksForRender = () => {
+        switch (filter) {
+            case 'Active':
+                return tasks.filter(t => !t.isDone)
+            case 'Completed':
+                return tasks.filter(t => t.isDone)
+            default:
+                return tasks
+        }
     }
-    else if (filter === 'Completed') {
-        filteredTasks = tasks.filter(t => t.isDone == true)
-    }
+    let filteredTasks = getTasksForRender()
 
     // UI
     return (

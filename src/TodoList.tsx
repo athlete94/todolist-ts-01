@@ -1,16 +1,19 @@
 import React from "react"
 import TodoListHeader from "./TodoListHeader"
 import Button from "./Button"
-import {TasksType} from "./App"
+import {FilterType, TasksType} from "./App"
 import Task from "./Task"
 
 type TodoListPropsType = {
     title: string,
     tasks: Array<TasksType>
-    removeTask: Function
-    filterTask: Function
+    removeTask: (id: number) => void,
+    filterTask: (filter: FilterType) => void
 }
 
+// export type ButtonsType = {
+//     title: FilterType
+// }
 
 const TodoList = ({
                       title,
@@ -19,11 +22,11 @@ const TodoList = ({
                       filterTask
                   }: TodoListPropsType) => {
 
-    const buttons = [
-        {title: 'All'},
-        {title: 'Active'},
-        {title: 'Completed'}
-    ]
+    // const buttons:Array<ButtonsType> = [
+    //     {title: "All"},
+    //     {title: 'Active'},
+    //     {title: 'Completed'}
+    // ]
 
     return <div>
         <TodoListHeader title={title}/>
@@ -37,7 +40,9 @@ const TodoList = ({
                                   removeTask={removeTask}/>)}
         </ul>
         <div>
-            {buttons.map((b) => <Button title={b.title} filterTask={filterTask}/>)}
+            <Button title={'all'}  filterFunc={() => filterTask('All')} />
+            <Button title={'active'} filterFunc={() => filterTask("Active")} />
+            <Button title={'completed'} filterFunc={() => filterTask("Completed")} />
         </div>
 
     </div>
