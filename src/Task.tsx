@@ -1,20 +1,25 @@
-import React from "react";
-import {TasksType} from "./App";
+import React, {ChangeEvent} from "react";
 
-type TaskPropsType = TasksType & {
-    removeTask: (id: number) => void
+type TasksPropsType = {
+    id: string
+    title: string
+    isDone: boolean
+    removeTask: () => void
+    changeStatus: (id: string, isDone: boolean) => void
 }
 
 
-const Task: React.FC<TaskPropsType> = ({title, isDone, removeTask, id}) => {
+const Tasks: React.FC<TasksPropsType> = ({id, title, isDone, removeTask, changeStatus}) => {
 
-    return <div>
-        <li>
-            <input type="checkbox" checked={isDone}/>
-            <span>{title}</span>
-            <button onClick={() => removeTask(id)}>x</button>
-        </li>
-    </div>
+    const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
+        changeStatus(id, e.currentTarget.checked)
+    }
+
+    return <li>
+        <input type="checkbox" onChange={onChangeHandler} id={id} name={title} checked={isDone}/>
+        {title}
+        <button onClick={removeTask}>X</button>
+    </li>
 }
 
-export default Task
+export default Tasks
