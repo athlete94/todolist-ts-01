@@ -1,4 +1,5 @@
 import React, {ChangeEvent} from "react";
+import {EditableSpan} from "./components/EditableSpan";
 
 type TasksPropsType = {
     id: string
