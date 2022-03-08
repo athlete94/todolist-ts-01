@@ -13,6 +13,7 @@ export const EditableSpan = ({title, callback}: EditableSpanPropsType) => {
 
     const onDoubleClickHandler = () => {
         setEdit(false)
+
     }
 
     const onBlurHandler = () => {
@@ -35,4 +36,3 @@ export const EditableSpan = ({title, callback}: EditableSpanPropsType) => {
         </div>
     );
 };
-;
