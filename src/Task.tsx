@@ -1,26 +1,37 @@
 import React, {ChangeEvent} from "react";
 import {EditableSpan} from "./components/EditableSpan";
+import CheckBox from "./components/CheckBox";
 
 type TasksPropsType = {
     id: string
     title: string
     isDone: boolean
-    removeTask: () => void
-    changeStatus: (id: string, isDone: boolean) => void
+    changeStatus: (id: string, isDone: boolean) => void,
+    deleteTask: (taskId: string) => void,
+    updateTaskTitleHandler: (title: string, taskId: string) => void
 }
 
 
-const Tasks: React.FC<TasksPropsType> = ({id, title, isDone, removeTask, changeStatus}) => {
+const Tasks: React.FC<TasksPropsType> = React.memo(({
+                                             id,
+                                             title,
+                                             isDone,
+                                             deleteTask,
+                                             changeStatus,
+                                             updateTaskTitleHandler
+                                         }) => {
 
-    const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
-        changeStatus(id, e.currentTarget.checked)
+    const onClickHandler = () => {
+        deleteTask(id)
     }
 
-    return <li>
-        <input type="checkbox" onChange={onChangeHandler} id={id} name={title} checked={isDone}/>
-        {title}
-        <button onClick={removeTask}>X</button>
-    </li>
-}
+    console.log('Task')
+
+    return <div>
+        <CheckBox callback={(e) => changeStatus(id, e)} checkedValue={isDone}/>
+        <EditableSpan callback={(title) => updateTaskTitleHandler(title, id)} title={title}/>
+        <button onClick={onClickHandler}>x</button>
+    </div>
+})
 
 export default Tasks

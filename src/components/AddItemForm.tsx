@@ -5,7 +5,7 @@ type AddItemFormTypeProps={
     //todolistID:string
 }
 
-export const AddItemForm = (props:AddItemFormTypeProps) => {
+export const AddItemForm = React.memo((props:AddItemFormTypeProps) => {
     let [title, setTitle] = useState("")
     let [error, setError] = useState<string | null>(null)
 
@@ -24,7 +24,7 @@ export const AddItemForm = (props:AddItemFormTypeProps) => {
     }
 
     const onKeyPressHandler = (e: KeyboardEvent<HTMLInputElement>) => {
-        setError(null);
+        if(error) setError(null);
         if (e.charCode === 13) {
             addTask();
         }
@@ -41,5 +41,5 @@ export const AddItemForm = (props:AddItemFormTypeProps) => {
             {error && <div className="error-message">{error}</div>}
         </div>
     );
-};
+});
 
