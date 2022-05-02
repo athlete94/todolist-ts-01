@@ -1,4 +1,4 @@
-import {FilterValuesType} from "../App";
+import {FilterValuesType} from "../components/Main/Main";
 import {todolistApi, TodolistApiType} from "../API/todolistApi";
 import {Dispatch} from "redux";
 
@@ -87,7 +87,7 @@ export const setTodolistTC = () => (dispatch: Dispatch<todolistsReducerActionTyp
     todolistApi.getTodolists()
         .then(res => {
             dispatch(setTodoLists(res.data))
-            debugger
+
         })
 }
 

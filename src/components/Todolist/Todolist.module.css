@@ -1,0 +1,29 @@
+.todolist {
+    width: 250px;
+    background-color: #b8b9e0;
+    border-radius: 5px;
+    padding: 15px;
+    box-shadow: 4px -3px 5px -2px rgba(75, 77, 107, 0.3);
+    margin: 30px 10px ;
+}
+
+ul {
+    padding-left: 0;
+    width: 100%;
+}
+
+li {
+    text-align: center;
+    list-style-type: none;
+}
+
+.filters {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+}
+
+.date {
+    margin-top: 10px;
+    font-size: 15px;
+}

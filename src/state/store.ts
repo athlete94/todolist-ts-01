@@ -2,6 +2,7 @@ import {applyMiddleware, combineReducers, createStore} from "redux";
 import {tasksReducer} from "./tasksReducer";
 import {todolistsReducer} from "./todolists-reducer";
 import thunk from "redux-thunk";
+import {navReducer} from "./navReducer";
 
 
 // объединяя reducer-ы с помощью combineReducers,
@@ -9,7 +10,8 @@ import thunk from "redux-thunk";
 
 const rootReducers = combineReducers({
         tasksReducer,
-        todolistsReducer
+        todolistsReducer,
+        navReducer
     }
 )
 

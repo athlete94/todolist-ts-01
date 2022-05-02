@@ -1,0 +1,23 @@
+.taskBlock {
+    border-bottom: 1px solid #8789d2;
+    text-align: left;
+    margin-bottom: 10px;
+    padding-bottom: 5px;
+}
+
+
+.task {
+    display: flex;
+    justify-content: space-between;
+    text-align: center;
+    flex-wrap: wrap;
+    width: 100%;
+    min-height: 37px;
+}
+
+.dateTime {
+    font-size: 14px;
+    display: flex;
+    justify-content: space-between;
+}
+

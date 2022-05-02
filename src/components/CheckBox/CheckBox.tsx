@@ -1,4 +1,4 @@
-import React, {ChangeEvent} from 'react';
+import React from 'react';
 
 
 type CheckBoxPropsType = {
@@ -7,12 +7,12 @@ type CheckBoxPropsType = {
 }
 
 
-const CheckBox = ({callback, checkedValue}: CheckBoxPropsType) => {
+
+export const CheckBox = ({callback, checkedValue}: CheckBoxPropsType) => {
+
     return (
         <div>
             <input type="checkbox" onChange={(e) => callback(e.currentTarget.checked)} checked={checkedValue}/>
         </div>
     );
 };
-
-export default CheckBox;
