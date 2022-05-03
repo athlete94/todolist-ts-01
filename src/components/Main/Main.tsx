@@ -23,12 +23,10 @@ export type TasksStateType = {
 
 
 function Main() {
-
     const todolists = useSelector<AppRootStateType, Array<TodolistType>>(state => state.todolistsReducer)
     const tasks = useSelector<AppRootStateType, TasksStateType>(state => state.tasksReducer)
     const dispatch = useDispatch();
 
-    debugger
     useEffect(() => {
         dispatch(setTodolistTC())
     }, [])

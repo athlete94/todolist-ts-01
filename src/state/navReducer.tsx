@@ -1,6 +1,7 @@
 import React from 'react';
 import {v1} from "uuid";
 import {Dispatch} from "redux";
+import {TodolistType} from "./todolists-reducer";
 
 
 export type NavReducerStateType = {

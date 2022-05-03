@@ -9,6 +9,7 @@ type SectionPropsType = {
     title: string
 }
 
+
 export const Section = ({id, title, deleteSection, changeSection}: SectionPropsType) => {
     const [hover, setHover] = useState<boolean>(false)
 

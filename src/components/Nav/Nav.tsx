@@ -4,6 +4,13 @@ import {useDispatch, useSelector} from "react-redux";
 import {AppRootStateType} from "../../state/store";
 import {changeSectionTC, NavReducerStateType, removeSectionTC} from "../../state/navReducer";
 import s from './Nav.module.css'
+import {NavLink} from 'react-router-dom'
+
+class Navlink extends React.Component {
+    render() {
+        return null;
+    }
+}
 
 const Nav = () => {
 
@@ -24,19 +31,19 @@ const Nav = () => {
                 {
                     sections.map(s => {
                         return <li>
-                            <Section
-                                key={s.id}
-                                id={s.id}
-                                title={s.title}
-                                deleteSection={deleteSection}
-                                changeSection={changeSection}/>
+                                <Section
+                                    key={s.id}
+                                    id={s.id}
+                                    title={s.title}
+                                    deleteSection={deleteSection}
+                                    changeSection={changeSection}/>
                         </li>
                     })
-                }
+                    }
 
-            </ul>
-        </div>
-    );
-};
+                    </ul>
+                    </div>
+                    );
+                };
 
-export default Nav;
+                export default Nav;
