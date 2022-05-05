@@ -1,11 +1,13 @@
 import React, {ChangeEvent, KeyboardEvent, useState} from 'react';
+import s from './AddItemForm.module.css'
 
 type AddItemFormTypeProps={
     callBack:(title:string)=>void,
+    placeholder?: string
     //todolistID:string
 }
 
-export const AddItemForm = (props:AddItemFormTypeProps) => {
+export const AddItemForm = React.memo((props:AddItemFormTypeProps) => {
     let [title, setTitle] = useState("")
     let [error, setError] = useState<string | null>(null)
 
@@ -24,7 +26,7 @@ export const AddItemForm = (props:AddItemFormTypeProps) => {
     }
 
     const onKeyPressHandler = (e: KeyboardEvent<HTMLInputElement>) => {
-        setError(null);
+        if(error) setError(null);
         if (e.charCode === 13) {
             addTask();
         }
@@ -32,14 +34,24 @@ export const AddItemForm = (props:AddItemFormTypeProps) => {
 
     return (
         <div>
-            <input value={title}
-                   onChange={onChangeHandler}
-                   onKeyPress={onKeyPressHandler}
-                   className={error ? "error" : ""}
-            />
-            <button onClick={addTask}>+</button>
+            <div className={s.addItemForm}>
+                <div>
+                    <input value={title}
+                           onChange={onChangeHandler}
+                           onKeyPress={onKeyPressHandler}
+                           className={error ? "error" : ""}
+                           placeholder={props.placeholder}
+                    />
+                </div>
+                <div>
+                    <button onClick={addTask}>add</button>
+                </div>
+
+            </div>
             {error && <div className="error-message">{error}</div>}
+
         </div>
+
     );
-};
+});
 
