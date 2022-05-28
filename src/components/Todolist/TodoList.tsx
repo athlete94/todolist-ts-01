@@ -4,10 +4,11 @@ import {AddItemForm} from "../AddItemForm/AddItemForm";
 import {EditableSpan} from "../EditableSpan/EditableSpan";
 import Task from "../Task/Task";
 import {useDispatch} from "react-redux";
-import {setTasksTC} from "../../state/tasksReducer";
-import {TaskStatuses, TaskType} from "../../API/todolistApi";
+import {setTasksTC, TaskType} from "../../state/tasksReducer";
+import {TaskStatuses} from "../../API/todolistApi";
 import s from './Todolist.module.css'
 import {DeleteButton} from "../DeleteButton/DeleteButton";
+import {RequestStatusType} from "../../state/app-reducer";
 
 
 type PropsType = {
@@ -23,6 +24,7 @@ type PropsType = {
     filter: FilterValuesType
     updateTodolistTitle: (todolistId: string, title: string) => void
     updateTaskTitle: (todolistId: string, tasksTitle: string, title: string) => void
+    entityStatus: RequestStatusType
 }
 
 export const Todolist = React.memo((props: PropsType) => {
@@ -38,14 +40,14 @@ export const Todolist = React.memo((props: PropsType) => {
         removeTodolist,
         filter,
         updateTodolistTitle,
-        updateTaskTitle
+        updateTaskTitle,
+        entityStatus
     } = props
 
     let dispatch = useDispatch()
 
     useEffect(() => {
         dispatch(setTasksTC(id))
-        debugger
     }, [])
 
     // const removeTodoList = useCallback(() => removeTodolist(id), [removeTodolist, id])
@@ -73,7 +75,7 @@ export const Todolist = React.memo((props: PropsType) => {
     const deleteTask = useCallback((taskId: string) => removeTask(taskId, id), [removeTask, id])
 
     let allTodolistTasks = tasks;
-    debugger
+
     if (filter === "active") {
         allTodolistTasks = allTodolistTasks.filter(t => t.status === TaskStatuses.New);
     }
@@ -83,10 +85,11 @@ export const Todolist = React.memo((props: PropsType) => {
 
 
     return <div className={s.todolist}>
-        <h3 style={{display: 'flex', justifyContent: "space-between"}}><EditableSpan callback={updateTodolistTitleHandler} title={title}/>
-            <DeleteButton onClick={() => removeTodolist(id)}>x</DeleteButton>
+        <h3 style={{display: 'flex', justifyContent: "space-between"}}><EditableSpan
+            callback={updateTodolistTitleHandler} title={title}/>
+            <DeleteButton onClick={() => removeTodolist(id)} disabled={entityStatus === 'loading'}>x</DeleteButton>
         </h3>
-        <AddItemForm callBack={addTaskHandler}/>
+        <AddItemForm callBack={addTaskHandler} disabled={entityStatus === 'loading'}/>
 
         <ul>
             {
@@ -108,7 +111,8 @@ export const Todolist = React.memo((props: PropsType) => {
                               addedDate={t.addedDate}
                               deleteTask={deleteTask}
                               updateTaskTitleHandler={updateTaskTitleHandler}
-                              changeStatus={changeStatus}/>
+                              changeStatus={changeStatus}
+                              disabled={t.disabled}/>
                     </li>
                 })
             }
@@ -125,7 +129,7 @@ export const Todolist = React.memo((props: PropsType) => {
             </button>
         </div>
         <div className={s.date}>
-            <span>{addedDate.slice(0,10)}</span>
+            <span>{addedDate.slice(0, 10)}</span>
         </div>
     </div>
 })
