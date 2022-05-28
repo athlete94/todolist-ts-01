@@ -6,7 +6,7 @@ type DefaultButtonPropsType = DetailedHTMLProps<ButtonHTMLAttributes<HTMLButtonE
 
 type DeleteButtonType = DefaultButtonPropsType
 
-export const DeleteButton = ({...restProps}: DeleteButtonType) => {
+export const    DeleteButton = ({...restProps}: DeleteButtonType) => {
 
 
     return <div className={s.deleteButton}>

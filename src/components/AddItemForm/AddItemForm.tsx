@@ -1,9 +1,12 @@
 import React, {ChangeEvent, KeyboardEvent, useState} from 'react';
 import s from './AddItemForm.module.css'
+import {setOpen} from "../../state/app-reducer";
+import {useDispatch} from "react-redux";
 
 type AddItemFormTypeProps={
     callBack:(title:string)=>void,
     placeholder?: string
+    disabled?: boolean
     //todolistID:string
 }
 
@@ -15,12 +18,15 @@ export const AddItemForm = React.memo((props:AddItemFormTypeProps) => {
         let newTitle = title.trim();
         if (newTitle !== "") {
             props.callBack(newTitle);
-            setTitle("");
+            setTitle('')
         } else {
             setError("Title is required");
         }
     }
 
+    const onFocusHandler = () => {
+        setError('')
+    }
     const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
         setTitle(e.currentTarget.value)
     }
@@ -41,10 +47,12 @@ export const AddItemForm = React.memo((props:AddItemFormTypeProps) => {
                            onKeyPress={onKeyPressHandler}
                            className={error ? "error" : ""}
                            placeholder={props.placeholder}
+                           onFocus={onFocusHandler}
+                           disabled={props.disabled}
                     />
                 </div>
                 <div>
-                    <button onClick={addTask}>add</button>
+                    <button onClick={addTask} disabled={props.disabled}>add</button>
                 </div>
 
             </div>

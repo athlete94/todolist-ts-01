@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import './Main.css';
 import {AddItemForm} from "../AddItemForm/AddItemForm";
 import {Todolist} from "../Todolist/TodoList";
@@ -12,8 +12,8 @@ import {
     TodolistType,
     updateTodolistTC
 } from "../../state/todolists-reducer";
-import {TaskStatuses, TaskType} from "../../API/todolistApi";
-import {createTaskTC, deleteTaskTC, updateTaskTC} from "../../state/tasksReducer";
+import {TaskStatuses, TaskApiType} from "../../API/todolistApi";
+import {createTaskTC, deleteTaskTC, TaskType, updateTaskTC} from "../../state/tasksReducer";
 
 export type FilterValuesType = "all" | "active" | "completed";
 
@@ -68,7 +68,8 @@ function Main() {
     return (
         <div className='App'>
             <AddItemForm callBack={addTodolist}
-                         placeholder={'add list..'}/>
+                         placeholder={'add list..'}
+            />
             <div className="todolists">
                 {
                     todolists.map(tl => {
@@ -82,6 +83,7 @@ function Main() {
                                     id={tl.id}
                                     title={tl.title}
                                     addedDate={tl.addedDate}
+                                    entityStatus={tl.entityStatus}
                                     tasks={tasksForTodolist}
                                     removeTask={removeTask}
                                     changeFilter={changeFilter}

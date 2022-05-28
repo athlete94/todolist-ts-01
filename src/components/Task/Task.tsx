@@ -4,6 +4,7 @@ import {CheckBox} from "../CheckBox/CheckBox"
 import {TaskStatuses} from "../../API/todolistApi";
 import s from './Task.module.css'
 import {DeleteButton} from "../DeleteButton/DeleteButton";
+import {RequestStatusType} from "../../state/app-reducer";
 
 
 type TasksPropsType = {
@@ -11,6 +12,7 @@ type TasksPropsType = {
     title: string
     status: TaskStatuses
     addedDate: string
+    disabled: RequestStatusType
     changeStatus: (id: string, status: TaskStatuses) => void,
     deleteTask: (taskId: string) => void,
     updateTaskTitleHandler: (title: string, taskId: string) => void
@@ -24,11 +26,13 @@ const Tasks: React.FC<TasksPropsType> = React.memo(({
                                                         addedDate,
                                                         deleteTask,
                                                         changeStatus,
-                                                        updateTaskTitleHandler
+                                                        updateTaskTitleHandler,
+                                                        disabled
                                                     }) => {
 
     const onClickHandler = () => {
         deleteTask(id)
+
     }
 
     const onChangeHandler = (e: boolean) => {
@@ -37,15 +41,15 @@ const Tasks: React.FC<TasksPropsType> = React.memo(({
     }
 
 
-    let time = addedDate.slice(11,16)
-    let date = addedDate.slice(0,10)
+    let time = addedDate.slice(11, 16)
+    let date = addedDate.slice(0, 10)
     console.log('Task')
 
     return <div className={s.taskBlock}>
         <div className={s.task}>
             <CheckBox callback={onChangeHandler} checkedValue={status === TaskStatuses.Completed}/>
             <EditableSpan callback={(title) => updateTaskTitleHandler(title, id)} title={title}/>
-            <DeleteButton onClick={onClickHandler}>x</DeleteButton>
+            <DeleteButton onClick={onClickHandler} disabled={disabled === 'loading'}>x</DeleteButton>
         </div>
         <div className={s.dateTime}>
             <div>{time}</div>
