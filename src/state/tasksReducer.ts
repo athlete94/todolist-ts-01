@@ -8,7 +8,7 @@ import {AxiosError} from "axios";
 import {handleServerAppError, handleServerNetworkError} from "../utils/error-utils";
 
 
-export type TaskType = TaskApiType & {disabled: RequestStatusType}
+export type TaskType = TaskApiType & { disabled: RequestStatusType }
 const initialState: TasksStateType = {}
 
 type tasksReducerActionType =
@@ -27,14 +27,14 @@ export const tasksReducer = (state: TasksStateType = initialState, action: tasks
         case 'SET_TASKS':
             return {
                 ...state,
-                [action.todolistId]: action.tasks.map(t => ({...t, disabled: 'idle'}) )
+                [action.todolistId]: action.tasks.map(t => ({...t, disabled: 'idle'}))
             }
         case 'REMOVE-TASK':
             return {...state, [action.todolistId]: state[action.todolistId].filter(el => el.id !== action.taskId)}
         case 'ADD-TASK':
             return {
                 ...state,
-                [action.task.todoListId]: [{...action.task, disabled: 'idle'}  , ...state[action.task.todoListId]]
+                [action.task.todoListId]: [{...action.task, disabled: 'idle'}, ...state[action.task.todoListId]]
             }
         case 'UPDATE_TASK':
             return {
@@ -58,7 +58,10 @@ export const tasksReducer = (state: TasksStateType = initialState, action: tasks
         case 'SET_DISABLED_DEL_TASK':
             return {
                 ...state,
-                [action.todolistId]: state[action.todolistId].map(t => t.id === action.taskId ? {...t, disabled: action.disabled} : t)
+                [action.todolistId]: state[action.todolistId].map(t => t.id === action.taskId ? {
+                    ...t,
+                    disabled: action.disabled
+                } : t)
             }
         default:
             return state
@@ -222,3 +225,4 @@ export const updateTaskTC = (todolistId: string, taskId: string, model: TaskUpda
                 handleServerNetworkError(dispatch, err.message)
             })
     }
+
