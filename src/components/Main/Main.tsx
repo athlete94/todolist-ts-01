@@ -14,6 +14,7 @@ import {
 } from "../../state/todolists-reducer";
 import {TaskStatuses, TaskApiType} from "../../API/todolistApi";
 import {createTaskTC, deleteTaskTC, TaskType, updateTaskTC} from "../../state/tasksReducer";
+import {Navigate} from "react-router-dom";
 
 export type FilterValuesType = "all" | "active" | "completed";
 
@@ -25,9 +26,13 @@ export type TasksStateType = {
 function Main() {
     const todolists = useSelector<AppRootStateType, Array<TodolistType>>(state => state.todolistsReducer)
     const tasks = useSelector<AppRootStateType, TasksStateType>(state => state.tasksReducer)
+    let isLoggedIn = useSelector<AppRootStateType, boolean>(state => state.authReducer.isLoggedIn)
     const dispatch = useDispatch();
 
     useEffect(() => {
+        if(!isLoggedIn) {
+            return
+        }
         dispatch(setTodolistTC())
     }, [])
 
@@ -63,6 +68,11 @@ function Main() {
 
     function changeFilter(value: FilterValuesType, todolistId: string) {
         dispatch(changeTodolistFilterAC(todolistId, value))
+    }
+
+
+    if(!isLoggedIn) {
+        return <Navigate to={'/login'} />
     }
 
     return (

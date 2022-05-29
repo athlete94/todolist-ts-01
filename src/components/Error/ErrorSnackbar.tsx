@@ -15,7 +15,7 @@ const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
 
 
 export default function CustomizedSnackbars() {
-    let error = useSelector<AppRootStateType, null | string>(state=> state.AppReducer.error)
+    let error = useSelector<AppRootStateType, null | string>(state=> state.appReducer.error)
     let dispatch = useDispatch()
 
 
