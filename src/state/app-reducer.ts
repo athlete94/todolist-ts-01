@@ -1,5 +1,4 @@
 import {Dispatch} from "redux";
-import {Simulate} from "react-dom/test-utils";
 import {authApi} from "../API/todolistApi";
 import {setIsLoggedIn} from "./authReducer";
 
