@@ -1,6 +1,8 @@
 import {Dispatch} from "redux";
 import {authApi} from "../API/todolistApi";
 import {setIsLoggedIn} from "./authReducer";
+import {AxiosError} from "axios";
+import {handleServerAppError, handleServerNetworkError} from "../utils/error-utils";
 
 export type RequestStatusType = 'idle' | 'loading' | 'successed' | 'failed'
 
@@ -88,9 +90,12 @@ export const isInitializedTC = () => (dispatch: Dispatch) => {
                 dispatch(setUserData(res.data.data))
             }
             else {
-                dispatch(setIsLoggedIn(false))
+                handleServerAppError(res.data, dispatch)
             }
             dispatch(setIsInitialized(true))
+        })
+        .catch((err: AxiosError) => {
+            handleServerNetworkError(dispatch, err.message)
         })
 }
 
