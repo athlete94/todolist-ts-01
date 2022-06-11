@@ -1,4 +1,4 @@
-import {AnyAction, applyMiddleware, combineReducers} from "redux";
+import {applyMiddleware, combineReducers} from "redux";
 import {tasksReducer, tasksReducerActionType} from "./tasksReducer";
 import {todolistsReducer, todolistsReducerActionType} from "./todolists-reducer";
 import thunk, {ThunkAction, ThunkDispatch} from "redux-thunk";

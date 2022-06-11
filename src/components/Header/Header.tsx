@@ -1,15 +1,13 @@
 import React from 'react';
 import s from './Header.module.css'
-import {NavLink} from "react-router-dom";
-import {useDispatch, useSelector} from "react-redux";
-import {AppRootStateType} from "../../state/store";
 import Button from '@mui/material/Button'
-import {AuthReducerStateType, logoutTC} from "../../state/authReducer";
+import { logoutTC} from "../../state/authReducer";
+import {useAppDispatch, useAppSelector} from "../../state/hooks";
 
 const Header = () => {
-    let isLoggedIn = useSelector<AppRootStateType, boolean>(state => state.authReducer.isLoggedIn)
-    let login = useSelector<AppRootStateType, string>(state =>  state.appReducer.login)
-    const dispatch = useDispatch()
+    let isLoggedIn = useAppSelector(state => state.authReducer.isLoggedIn)
+    let login = useAppSelector(state =>  state.appReducer.login)
+    const dispatch = useAppDispatch()
 
     const logoutHandler = () => {
         dispatch(logoutTC())

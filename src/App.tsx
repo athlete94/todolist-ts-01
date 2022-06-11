@@ -3,19 +3,18 @@ import Header from "./components/Header/Header";
 import Main from "./components/Main/Main";
 import s from './App.module.css'
 import {LinearProgress} from "@material-ui/core";
-import {useDispatch, useSelector} from "react-redux";
-import {AppRootStateType} from "./state/store";
-import {isInitializedTC, RequestStatusType} from "./state/app-reducer";
+import {isInitializedTC} from "./state/app-reducer";
 import CustomizedSnackbars from "./components/Error/ErrorSnackbar";
-import {BrowserRouter, Routes, Route, HashRouter} from "react-router-dom";
+import { Routes, Route, HashRouter} from "react-router-dom";
 import Login from "./components/Login/Login";
 import {CircularProgress} from "@mui/material";
+import {useAppDispatch, useAppSelector} from "./state/hooks";
 
 const App = () => {
 
-    const status = useSelector<AppRootStateType, RequestStatusType>(state => state.appReducer.status)
-    const isInitialized = useSelector<AppRootStateType, boolean>(state => state.appReducer.isInitialized)
-    const dispatch = useDispatch()
+    const status = useAppSelector(state => state.appReducer.status)
+    const isInitialized = useAppSelector(state => state.appReducer.isInitialized)
+    const dispatch = useAppDispatch()
 
     useEffect(()=> {
         dispatch(isInitializedTC())

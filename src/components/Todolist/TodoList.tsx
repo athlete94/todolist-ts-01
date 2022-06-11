@@ -9,6 +9,7 @@ import {TaskStatuses} from "../../API/todolistApi";
 import s from './Todolist.module.css'
 import {DeleteButton} from "../DeleteButton/DeleteButton";
 import {RequestStatusType} from "../../state/app-reducer";
+import {useAppDispatch} from "../../state/hooks";
 
 
 type PropsType = {
@@ -44,7 +45,7 @@ export const Todolist = React.memo((props: PropsType) => {
         entityStatus
     } = props
 
-    let dispatch = useDispatch()
+    let dispatch = useAppDispatch()
 
     useEffect(() => {
         dispatch(setTasksTC(id))
