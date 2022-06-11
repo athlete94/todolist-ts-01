@@ -7,7 +7,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {AppRootStateType} from "./state/store";
 import {isInitializedTC, RequestStatusType} from "./state/app-reducer";
 import CustomizedSnackbars from "./components/Error/ErrorSnackbar";
-import {BrowserRouter, Routes, Route} from "react-router-dom";
+import {BrowserRouter, Routes, Route, HashRouter} from "react-router-dom";
 import Login from "./components/Login/Login";
 import {CircularProgress} from "@mui/material";
 
@@ -28,7 +28,7 @@ const App = () => {
     }
 
     return (
-        <BrowserRouter>
+        <HashRouter>
             <div>
                 <Header/>
                 {status === 'loading' && <LinearProgress color="secondary"/>}
@@ -43,7 +43,7 @@ const App = () => {
 
                 <CustomizedSnackbars/>
             </div>
-        </BrowserRouter>
+        </HashRouter>
     );
 };
 
