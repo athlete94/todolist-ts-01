@@ -4,6 +4,7 @@ import {Dispatch} from "redux";
 import {AppActionsType, appSetStatus, RequestStatusType} from "./app-reducer";
 import {AxiosError} from "axios";
 import {handleServerAppError, handleServerNetworkError} from "../utils/error-utils";
+import {AppThunk} from "./store";
 
 export type TodolistType = TodolistApiType & {
     filter: FilterValuesType,
@@ -40,7 +41,7 @@ export const todolistsReducer = (state: Array<TodolistType> = initialState, acti
     }
 }
 
-type todolistsReducerActionType =
+export type todolistsReducerActionType =
     RemovetodolistACType
     | AddTodolistACType
     | changeTodolistTitleACType
@@ -112,7 +113,7 @@ export const setDisabledBtn = (disabled: boolean) => {
 
 //thunk creators
 
-export const setTodolistTC = () => (dispatch: Dispatch<todolistsReducerActionType>) => {
+export const setTodolistTC = (): AppThunk => dispatch=> {
     dispatch(appSetStatus('loading'))
     todolistApi.getTodolists()
         .then(res => {
@@ -126,7 +127,7 @@ export const setTodolistTC = () => (dispatch: Dispatch<todolistsReducerActionTyp
 
 }
 
-export const addTodolistTC = (title: string) => (dispatch: Dispatch<todolistsReducerActionType>) => {
+export const addTodolistTC = (title: string): AppThunk => dispatch => {
     dispatch(appSetStatus('loading'))
     todolistApi.createTodolist(title)
         .then(res => {
@@ -143,7 +144,7 @@ export const addTodolistTC = (title: string) => (dispatch: Dispatch<todolistsRed
 
 }
 
-export const deleteTodolistTC = (todolistId: string) => (dispatch: Dispatch<todolistsReducerActionType>) => {
+export const deleteTodolistTC = (todolistId: string): AppThunk => dispatch => {
     dispatch(appSetStatus('loading'))
     dispatch(setEntityStatus(todolistId, 'loading'))
     todolistApi.deleteTodolist(todolistId)
@@ -161,7 +162,7 @@ export const deleteTodolistTC = (todolistId: string) => (dispatch: Dispatch<todo
         })
 
 }
-export const updateTodolistTC = (todolistId: string, title: string) => (dispatch: Dispatch<todolistsReducerActionType>) => {
+export const updateTodolistTC = (todolistId: string, title: string): AppThunk => dispatch => {
     dispatch(appSetStatus('loading'))
     todolistApi.updateTodolist(todolistId, title)
         .then((res) => {

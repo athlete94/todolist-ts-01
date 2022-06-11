@@ -3,6 +3,7 @@ import {authApi} from "../API/todolistApi";
 import {setIsLoggedIn} from "./authReducer";
 import {AxiosError} from "axios";
 import {handleServerAppError, handleServerNetworkError} from "../utils/error-utils";
+import {AppThunk} from "./store";
 
 export type RequestStatusType = 'idle' | 'loading' | 'successed' | 'failed'
 
@@ -82,7 +83,7 @@ export const setUserData = (userData: {id: number, email: string, login: string}
 
 //thunk
 
-export const isInitializedTC = () => (dispatch: Dispatch) => {
+export const isInitializedTC = (): AppThunk => dispatch => {
     authApi.me()
         .then(res => {
             if(res.data.resultCode === 0) {

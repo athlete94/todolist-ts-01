@@ -1,8 +1,9 @@
 import {authApi, LoginRequestType} from "../API/todolistApi";
 import {Dispatch} from "redux";
-import {appSetStatus, AppSetStatusType} from "./app-reducer";
+import {appSetStatus, AppSetStatusType, isInitializedTC} from "./app-reducer";
 import {AxiosError} from "axios";
 import {handleServerAppError, handleServerNetworkError} from "../utils/error-utils";
+import {AppThunk} from "./store";
 
 
 export type AuthReducerStateType = {
@@ -23,7 +24,7 @@ export const authReducer = (state: AuthReducerStateType = initialState, action: 
     }
 }
 
-type AuthReducerActionType = SetIsLoggedInType
+export type AuthReducerActionType = SetIsLoggedInType
 
 
 // action creators
@@ -40,11 +41,12 @@ export const setIsLoggedIn = (isLoggedIn: boolean) => {
 
 //thunk creators
 
-export const loginTC = (data: LoginRequestType) => (dispatch: Dispatch<AuthReducerActionType | AppSetStatusType>) => {
+export const loginTC = (data: LoginRequestType): AppThunk => dispatch => {
     dispatch(appSetStatus('loading'))
     authApi.login(data)
         .then(res => {
             if(res.data.resultCode === 0) {
+                dispatch(isInitializedTC())
                 dispatch(setIsLoggedIn(true))
                 dispatch(appSetStatus('successed'))
             }
@@ -57,7 +59,7 @@ export const loginTC = (data: LoginRequestType) => (dispatch: Dispatch<AuthReduc
         })
 }
 
-export const logoutTC = () => (dispatch: Dispatch<AuthReducerActionType | AppSetStatusType>) => {
+export const logoutTC = (): AppThunk => dispatch => {
     dispatch(appSetStatus('loading'))
     authApi.logout()
         .then(res => {
