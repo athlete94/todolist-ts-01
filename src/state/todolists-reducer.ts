@@ -1,6 +1,5 @@
 import {FilterValuesType} from "../components/Main/Main";
 import {todolistApi, TodolistApiType} from "../API/todolistApi";
-import {Dispatch} from "redux";
 import {AppActionsType, appSetStatus, RequestStatusType} from "./app-reducer";
 import {AxiosError} from "axios";
 import {handleServerAppError, handleServerNetworkError} from "../utils/error-utils";

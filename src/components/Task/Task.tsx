@@ -19,20 +19,19 @@ type TasksPropsType = {
 }
 
 
-const Tasks: React.FC<TasksPropsType> = React.memo(({
-                                                        id,
-                                                        title,
-                                                        status,
-                                                        addedDate,
-                                                        deleteTask,
-                                                        changeStatus,
-                                                        updateTaskTitleHandler,
-                                                        disabled
-                                                    }) => {
+const Tasks = React.memo(({
+                              id,
+                              title,
+                              status,
+                              addedDate,
+                              deleteTask,
+                              changeStatus,
+                              updateTaskTitleHandler,
+                              disabled
+                          }: TasksPropsType) => {
 
     const onClickHandler = () => {
         deleteTask(id)
-
     }
 
     const onChangeHandler = (e: boolean) => {

@@ -1,4 +1,3 @@
-import {Dispatch} from "redux";
 import {authApi} from "../API/todolistApi";
 import {setIsLoggedIn} from "./authReducer";
 import {AxiosError} from "axios";

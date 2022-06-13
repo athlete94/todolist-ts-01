@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useCallback, useEffect} from 'react';
 import './Main.css';
 import {AddItemForm} from "../AddItemForm/AddItemForm";
 import {Todolist} from "../Todolist/TodoList";
@@ -21,7 +21,7 @@ export type TasksStateType = {
 }
 
 
-function Main() {
+export const Main = React.memo(() => {
     const todolists = useAppSelector(state => state.todolistsReducer)
     const tasks = useAppSelector(state => state.tasksReducer)
     let isLoggedIn = useAppSelector(state => state.authReducer.isLoggedIn)
@@ -35,38 +35,38 @@ function Main() {
     }, [])
 
     //tasks functions
-    function removeTask(id: string, todolistId: string) {
+    const removeTask = useCallback((id: string, todolistId: string) => {
         dispatch(deleteTaskTC(todolistId, id))
-    }
+    }, [dispatch] )
 
-    function addTask(title: string, todolistId: string) {
+    const addTask = useCallback((title: string, todolistId: string) => {
         dispatch(createTaskTC(todolistId, title))
-    }
+    }, [dispatch])
 
-    const updateTaskTitle = (todolistId: string, taskId: string, title: string) => {
+    const updateTaskTitle = useCallback((todolistId: string, taskId: string, title: string) => {
         dispatch(updateTaskTC(todolistId, taskId, {title}))
-    }
+    }, [dispatch] )
 
-    function changeStatus(todolistId: string, taskId: string, status: TaskStatuses) {
+    const changeStatus = useCallback((todolistId: string, taskId: string, status: TaskStatuses) => {
         dispatch(updateTaskTC(todolistId, taskId, {status}))
-    }
+    }, [dispatch] )
 
     //list functions
-    const addTodolist = (title: string) => {
+    const addTodolist = useCallback((title: string) => {
         dispatch(addTodolistTC(title))
-    }
+    }, [dispatch])
 
-    function removeTodolist(id: string) {
+    const removeTodolist = useCallback((id: string) => {
         dispatch(deleteTodolistTC(id))
-    }
+    }, [dispatch] )
 
-    const updateTodolistTitle = (todolistId: string, title: string) => {
+    const updateTodolistTitle = useCallback((todolistId: string, title: string) => {
         dispatch(updateTodolistTC(todolistId, title))
-    }
+    }, [dispatch] )
 
-    function changeFilter(value: FilterValuesType, todolistId: string) {
+    const changeFilter = useCallback((value: FilterValuesType, todolistId: string) => {
         dispatch(changeTodolistFilterAC(todolistId, value))
-    }
+    }, [dispatch] )
 
 
     if(!isLoggedIn) {
@@ -110,6 +110,6 @@ function Main() {
             </div>
         </div>
     );
-}
+})
 
 export default Main;

@@ -44,6 +44,5 @@ const App = () => {
             </div>
         </HashRouter>
     );
-};
-
+}
 export default App;

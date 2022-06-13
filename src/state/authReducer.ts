@@ -1,6 +1,5 @@
 import {authApi, LoginRequestType} from "../API/todolistApi";
-import {Dispatch} from "redux";
-import {appSetStatus, AppSetStatusType, isInitializedTC} from "./app-reducer";
+import {appSetStatus, isInitializedTC} from "./app-reducer";
 import {AxiosError} from "axios";
 import {handleServerAppError, handleServerNetworkError} from "../utils/error-utils";
 import {AppThunk} from "./store";

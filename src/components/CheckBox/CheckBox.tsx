@@ -8,11 +8,11 @@ type CheckBoxPropsType = {
 
 
 
-export const CheckBox = ({callback, checkedValue}: CheckBoxPropsType) => {
+export const CheckBox = React.memo(({callback, checkedValue}: CheckBoxPropsType) => {
 
     return (
         <div>
             <input type="checkbox" onChange={(e) => callback(e.currentTarget.checked)} checked={checkedValue}/>
         </div>
     );
-};
+})
