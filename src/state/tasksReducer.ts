@@ -1,5 +1,5 @@
 import {TasksStateType} from "../components/Main/Main";
-import {AddTodolistACType, RemovetodolistACType, SetTodoListsType} from "./todolists-reducer";
+import {AddTodolistACType, ClearDataType, RemovetodolistACType, SetTodoListsType} from "./todolists-reducer";
 import {Dispatch} from "redux";
 import {TaskPriorities, TaskStatuses, TaskApiType, TaskUpdateType, todolistApi} from "../API/todolistApi";
 import {AppThunk, RootState} from "./store";
@@ -21,6 +21,7 @@ export type tasksReducerActionType =
     | UpdateTaskType
     | AppActionsType
     | SetDisabledDelTask
+    | ClearDataType
 
 export const tasksReducer = (state: TasksStateType = initialState, action: tasksReducerActionType): TasksStateType => {
     switch (action.type) {
@@ -63,6 +64,8 @@ export const tasksReducer = (state: TasksStateType = initialState, action: tasks
                     disabled: action.disabled
                 } : t)
             }
+        case 'CLEAR_DATA':
+            return {}
         default:
             return state
     }
@@ -192,37 +195,37 @@ export const updateTaskTC = (todolistId: string, taskId: string, model: TaskUpda
     (dispatch: Dispatch, getState: () => RootState) => {
 
 
-    const state = getState()
-    let task = state.tasksReducer[todolistId].find(t => t.id === taskId)
-    if (!task) {
-        //throw new Error("task not found in the state");
-        console.warn('task not found in the state')
-        return
-    }
+        const state = getState()
+        let task = state.tasksReducer[todolistId].find(t => t.id === taskId)
+        if (!task) {
+            //throw new Error("task not found in the state");
+            console.warn('task not found in the state')
+            return
+        }
 
-    let taskApi: TaskUpdateType = {
-        title: task.title,
-        description: task.description,
-        completed: task.completed,
-        status: task.status,
-        priority: task.priority,
-        startDate: task.startDate,
-        deadline: task.deadline,
-        ...model
-    }
+        let taskApi: TaskUpdateType = {
+            title: task.title,
+            description: task.description,
+            completed: task.completed,
+            status: task.status,
+            priority: task.priority,
+            startDate: task.startDate,
+            deadline: task.deadline,
+            ...model
+        }
 
-    dispatch(appSetStatus('loading'))
-    todolistApi.updateTask(todolistId, taskId, taskApi)
-        .then((res) => {
-            if (res.data.resultCode === 0) {
-                dispatch(appSetStatus('successed'))
-                dispatch(updateTask(todolistId, taskId, model))
-            } else {
-                handleServerAppError(res.data, dispatch)
-            }
-        })
-        .catch((err: AxiosError) => {
-            handleServerNetworkError(dispatch, err.message)
-        })
-}
+        dispatch(appSetStatus('loading'))
+        todolistApi.updateTask(todolistId, taskId, taskApi)
+            .then((res) => {
+                if (res.data.resultCode === 0) {
+                    dispatch(appSetStatus('successed'))
+                    dispatch(updateTask(todolistId, taskId, model))
+                } else {
+                    handleServerAppError(res.data, dispatch)
+                }
+            })
+            .catch((err: AxiosError) => {
+                handleServerNetworkError(dispatch, err.message)
+            })
+    }
 

@@ -4,6 +4,7 @@ import {AppActionsType, appSetStatus, RequestStatusType} from "./app-reducer";
 import {AxiosError} from "axios";
 import {handleServerAppError, handleServerNetworkError} from "../utils/error-utils";
 import {AppThunk} from "./store";
+import {setTasksTC} from "./tasksReducer";
 
 export type TodolistType = TodolistApiType & {
     filter: FilterValuesType,
@@ -35,6 +36,8 @@ export const todolistsReducer = (state: Array<TodolistType> = initialState, acti
             return state.map(el => el.id === action.id ? {...el, filter: action.filter} : el)
         case 'SET_ENTITY_STATUS':
             return state.map(tl => tl.id === action.id ? {...tl, entityStatus: action.entityStatus} : tl)
+        case 'CLEAR_DATA':
+            return []
         default:
             return state
     }
@@ -49,6 +52,7 @@ export type todolistsReducerActionType =
     | AppActionsType
     | SetEntityStatusType
     | SetDisabledBtnType
+    | ClearDataType
 
 
 // action creators
@@ -109,15 +113,28 @@ export const setDisabledBtn = (disabled: boolean) => {
     } as const
 }
 
+export type ClearDataType = ReturnType<typeof clearData>
+export const clearData = () => {
+    return {
+        type: 'CLEAR_DATA'
+    } as const
+}
+
 
 //thunk creators
 
-export const setTodolistTC = (): AppThunk => dispatch=> {
+export const setTodolistTC = (): AppThunk => dispatch => {
     dispatch(appSetStatus('loading'))
     todolistApi.getTodolists()
         .then(res => {
             dispatch(setTodoLists(res.data))
             dispatch(appSetStatus('successed'))
+            return res.data
+        })
+        .then((todos) => {
+            todos.forEach(tl => {
+                dispatch(setTasksTC(tl.id)) // сетаем такси только после загрузкки тудулистов
+            })
         })
         .catch((err: AxiosError) => {
             handleServerNetworkError(dispatch, err.message)
@@ -148,11 +165,10 @@ export const deleteTodolistTC = (todolistId: string): AppThunk => dispatch => {
     dispatch(setEntityStatus(todolistId, 'loading'))
     todolistApi.deleteTodolist(todolistId)
         .then((res) => {
-            if(res.data.resultCode === 0) {
+            if (res.data.resultCode === 0) {
                 dispatch(appSetStatus('successed'))
                 dispatch(removeTodoListAC(todolistId))
-            }
-            else {
+            } else {
                 handleServerAppError(res.data, dispatch)
             }
         })
@@ -165,11 +181,10 @@ export const updateTodolistTC = (todolistId: string, title: string): AppThunk =>
     dispatch(appSetStatus('loading'))
     todolistApi.updateTodolist(todolistId, title)
         .then((res) => {
-            if(res.data.resultCode === 0) {
+            if (res.data.resultCode === 0) {
                 dispatch(appSetStatus('successed'))
                 dispatch(changeTodolistTitleAC(todolistId, title))
-            }
-            else {
+            } else {
                 handleServerAppError(res.data, dispatch)
             }
         })

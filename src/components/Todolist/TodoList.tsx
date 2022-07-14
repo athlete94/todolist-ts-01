@@ -46,9 +46,9 @@ export const Todolist = React.memo((props: PropsType) => {
 
     let dispatch = useAppDispatch()
 
-    useEffect(() => {
-        dispatch(setTasksTC(id))
-    }, [])
+    // useEffect(() => {
+    //     dispatch(setTasksTC(id))
+    // }, [])
 
     const onAllClickHandler = useCallback(() => changeFilter("all", id), [changeFilter, id])
     const onActiveClickHandler = useCallback(() => changeFilter("active", id), [changeFilter, id])

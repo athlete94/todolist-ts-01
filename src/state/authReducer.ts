@@ -3,6 +3,7 @@ import {appSetStatus, isInitializedTC} from "./app-reducer";
 import {AxiosError} from "axios";
 import {handleServerAppError, handleServerNetworkError} from "../utils/error-utils";
 import {AppThunk} from "./store";
+import {clearData, ClearDataType} from "./todolists-reducer";
 
 
 export type AuthReducerStateType = {
@@ -23,7 +24,7 @@ export const authReducer = (state: AuthReducerStateType = initialState, action: 
     }
 }
 
-export type AuthReducerActionType = SetIsLoggedInType
+export type AuthReducerActionType = SetIsLoggedInType | ClearDataType
 
 
 // action creators
@@ -65,6 +66,7 @@ export const logoutTC = (): AppThunk => dispatch => {
             if(res.data.resultCode === 0) {
                 dispatch(setIsLoggedIn(false))
                 dispatch(appSetStatus('successed'))
+                dispatch(clearData())
             }
             else {
                 handleServerAppError(res.data, dispatch)

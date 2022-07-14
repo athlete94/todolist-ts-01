@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useCallback} from "react";
 import {EditableSpan} from "../EditableSpan/EditableSpan";
 import {CheckBox} from "../CheckBox/CheckBox"
 import {TaskStatuses} from "../../API/todolistApi";
@@ -34,10 +34,14 @@ const Tasks = React.memo(({
         deleteTask(id)
     }
 
-    const onChangeHandler = (e: boolean) => {
+    const onChangeHandler = useCallback((e: boolean) => {
         let newStatus = e ? TaskStatuses.Completed : TaskStatuses.New
         changeStatus(id, newStatus)
-    }
+    }, [changeStatus, id] )
+
+    const onTitleChangeHandler = useCallback ((title: string) => {
+        updateTaskTitleHandler(title, id)
+    }, [updateTaskTitleHandler, id])
 
 
     let time = addedDate.slice(11, 16)
@@ -47,7 +51,7 @@ const Tasks = React.memo(({
     return <div className={s.taskBlock}>
         <div className={s.task}>
             <CheckBox callback={onChangeHandler} checkedValue={status === TaskStatuses.Completed}/>
-            <EditableSpan callback={(title) => updateTaskTitleHandler(title, id)} title={title}/>
+            <EditableSpan callback={onTitleChangeHandler} title={title}/>
             <DeleteButton onClick={onClickHandler} disabled={disabled === 'loading'}>x</DeleteButton>
         </div>
         <div className={s.dateTime}>
