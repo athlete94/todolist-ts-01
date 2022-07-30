@@ -2,7 +2,7 @@
   "name": "todolist",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://athlete94.github.io/it-incubator-todolist-ts-01",
+  "homepage": "https://athlete94.github.io/todolist-ts-01",
   "dependencies": {
     "@emotion/react": "^11.9.0",
     "@emotion/styled": "^11.8.1",

@@ -1,9 +1,9 @@
-import React, {useCallback, useEffect} from 'react';
+import React, {useCallback} from 'react';
 import {FilterValuesType} from '../Main/Main';
 import {AddItemForm} from "../AddItemForm/AddItemForm";
 import {EditableSpan} from "../EditableSpan/EditableSpan";
 import Task from "../Task/Task";
-import {setTasksTC, TaskType} from "../../state/tasksReducer";
+import {TaskType} from "../../state/tasksReducer";
 import {TaskStatuses} from "../../API/todolistApi";
 import s from './Todolist.module.css'
 import {DeleteButton} from "../DeleteButton/DeleteButton";
@@ -117,7 +117,7 @@ export const Todolist = React.memo((props: PropsType) => {
             }
         </ul>
         <div className={s.filters}>
-            <button className={filter === 'all' ? "active-filter" : "filter"}
+                <button className={filter === 'all' ? "active-filter" : "filter"}
                     onClick={onAllClickHandler}>All
             </button>
             <button className={filter === 'active' ? "active-filter" : "filter"}

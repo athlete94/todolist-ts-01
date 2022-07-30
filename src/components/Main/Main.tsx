@@ -16,7 +16,7 @@ import {useAppDispatch, useAppSelector} from "../../state/hooks";
 
 export type FilterValuesType = "all" | "active" | "completed";
 
-export type TasksStateType = {
+export type     TasksStateType = {
     [key: string]: Array<TaskType>
 }
 
